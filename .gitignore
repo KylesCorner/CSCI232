@@ -1,3 +1,4 @@
 *.class
 documents/
 jars/
+*.zip

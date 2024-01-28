@@ -34,9 +34,7 @@ public class QuickFindUF {
   }
 
   // Time of 1
-  public boolean connected(int p, int q) {
-    return id[p] == id[q];
-  }
+  public boolean connected(int p, int q) { return id[p] == id[q]; }
 
   // Quick find algorithm
   // Time of N
