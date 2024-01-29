@@ -16,8 +16,7 @@ public class Percolation {
   // -----------------------------
 
   private QuickFindUF quf;
-  private Boolean[] data; // FIXME convert this to integer. boolean default
-                          // values in array not working
+  private int[] data; // values in array not working
   private int N;
   private final int bottom;
   private final int top;
@@ -32,7 +31,8 @@ public class Percolation {
 
     this.N = N;
     this.quf = new QuickFindUF(N * N + 2);
-    this.data = new Boolean[N * N];
+    // 0 = closed. 1 = open.
+    this.data = new int[N * N];
     this.top = N * N;
     this.bottom = N * N + 1;
     this.openSites = 0;
@@ -42,7 +42,9 @@ public class Percolation {
   // Private Methods
   // -----------------------------
 
-  private boolean index(int row, int col) { return data[flatten(row, col)]; }
+  private int index(int row, int col) {
+    return data[flatten(row, col)];
+  }
 
   private boolean validate_index(int row, int col) {
     return ((row >= 0) && (col >= 0) && (row < N) && (col < N));
@@ -57,7 +59,7 @@ public class Percolation {
     }
   }
 
-  private void edit(int row, int col, boolean delta) {
+  private void edit(int row, int col, int delta) {
     data[(row * N) + col] = delta;
   }
 
@@ -96,7 +98,7 @@ public class Percolation {
       return;
     }
     this.openSites++;
-    edit(row, col, true);
+    edit(row, col, 1);
 
     if (row == 0) {
       this.quf.union(this.top, flatten(row, col));
@@ -110,7 +112,7 @@ public class Percolation {
 
   public boolean isOpen(int row, int col) {
     // is the site (row, col) open?
-    return index(row, col);
+    return index(row, col) == 1;
   }
 
   public boolean isFull(int row, int col) {
@@ -154,19 +156,19 @@ public class Percolation {
         // init test
         if (p.isOpen(row, col) == true) {
           StdOut.println("Open initialization test failed at (" + row + ", " +
-                         col + ")");
+              col + ")");
         }
         if (p.isFull(row, col) == true) {
           StdOut.println("Full initialization test failed at (" + row + ", " +
-                         col + ")");
+              col + ")");
         }
       }
     }
   }
 
   private static void input_4() {
-    int[][] commands = {{3, 0}, {2, 0}, {1, 0}, {0, 0},
-                        {0, 3}, {1, 3}, {3, 3}, {2, 3}};
+    int[][] commands = { { 3, 0 }, { 2, 0 }, { 1, 0 }, { 0, 0 },
+        { 0, 3 }, { 1, 3 }, { 3, 3 }, { 2, 3 } };
 
     Percolation pc = new Percolation(4);
 
@@ -183,7 +185,6 @@ public class Percolation {
   public static void main(String[] args) {
     int N = Integer.parseInt(args[0]);
     Percolation p = new Percolation(N);
-    StdOut.println(p.data[0]);
 
     init_tests(p, N);
     open_tests(p, N);
