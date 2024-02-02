@@ -42,14 +42,11 @@ public class Percolation {
   // Private Methods
   // -----------------------------
 
-  private int index(int row, int col) {
-    return data[flatten(row, col)];
-  }
-
   private boolean validate_index(int row, int col) {
     return ((row >= 0) && (col >= 0) && (row < N) && (col < N));
   }
 
+  //returns index of flat array
   private int flatten(int row, int col) {
     if (validate_index(row, col)) {
       return (row * this.N) + col;
@@ -59,8 +56,12 @@ public class Percolation {
     }
   }
 
+  private int index(int row, int col) {
+    return data[flatten(row, col)];
+  }
+
   private void edit(int row, int col, int delta) {
-    data[(row * N) + col] = delta;
+    data[(row * this.N) + col] = delta;
   }
 
   private void check_connected(int row, int col) {
@@ -127,7 +128,7 @@ public class Percolation {
 
   public boolean percolates() {
     // does the system percolate?
-    return this.quf.find(this.top) == this.quf.find(this.bottom);
+    return this.quf.connected(this.top, this.bottom);
   }
 
   // -----------------------------
@@ -176,7 +177,7 @@ public class Percolation {
       int p = commands[i][0];
       int q = commands[i][1];
 
-      pc.open(p, 1);
+      pc.open(p, q);
     }
 
     StdOut.println("input_4 test results: " + pc.percolates());
@@ -190,5 +191,7 @@ public class Percolation {
     open_tests(p, N);
 
     input_4();
+
+
   }
 }
