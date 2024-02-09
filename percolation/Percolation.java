@@ -16,7 +16,7 @@ public class Percolation {
   // -----------------------------
 
   private QuickFindUF quf;
-  private int[] data; // values in array not working
+  private int[][] data; // values in array not working
   private int N;
   private final int bottom;
   private final int top;
@@ -32,7 +32,7 @@ public class Percolation {
     this.N = N;
     this.quf = new QuickFindUF(N * N + 2);
     // 0 = closed. 1 = open.
-    this.data = new int[N * N];
+    this.data = new int[N][N];
     this.top = N * N;
     this.bottom = N * N + 1;
     this.openSites = 0;
@@ -49,19 +49,21 @@ public class Percolation {
   //returns index of flat array
   private int flatten(int row, int col) {
     if (validate_index(row, col)) {
-      return (row * this.N) + col;
+      return this.N * (row) + col;
 
     } else {
       throw new IndexOutOfBoundsException("Index out of bounds");
     }
   }
 
-  private int index(int row, int col) {
-    return data[flatten(row, col)];
+  private int index(int ind) {
+    int x = ind/this.N;
+    int y = ind % this.N;
+    return this.data[x][y];
   }
 
   private void edit(int row, int col, int delta) {
-    data[(row * this.N) + col] = delta;
+    this.data[row][col] = delta;
   }
 
   private void check_connected(int row, int col) {
@@ -100,12 +102,13 @@ public class Percolation {
     }
     this.openSites++;
     edit(row, col, 1);
+    int flattensite = flatten(row, col);
 
-    if (row == 0) {
-      this.quf.union(this.top, flatten(row, col));
+    if (row == 1) {
+      this.quf.union(this.top, flattensite);
     }
-    if (row == this.N) {
-      this.quf.union(this.bottom, flatten(row, col));
+    if (row == this.N - 1) {
+      this.quf.union(this.bottom, flattensite);
     }
 
     check_connected(row, col);
@@ -113,7 +116,12 @@ public class Percolation {
 
   public boolean isOpen(int row, int col) {
     // is the site (row, col) open?
-    return index(row, col) == 1;
+    if(this.validate_index(row, col)){
+      return this.data[row][col] == 1;
+    }
+    else{
+      return false;
+    }
   }
 
   public boolean isFull(int row, int col) {
@@ -191,6 +199,7 @@ public class Percolation {
     open_tests(p, N);
 
     input_4();
+    StdOut.println("Testing: " + p.index(2));
 
 
   }
