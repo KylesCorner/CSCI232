@@ -55,13 +55,6 @@ public class Percolation {
       throw new IndexOutOfBoundsException("Index out of bounds");
     }
   }
-
-  private int index(int ind) {
-    int x = ind/this.N;
-    int y = ind % this.N;
-    return this.data[x][y];
-  }
-
   private void edit(int row, int col, int delta) {
     this.data[row][col] = delta;
   }
@@ -104,7 +97,7 @@ public class Percolation {
     edit(row, col, 1);
     int flattensite = flatten(row, col);
 
-    if (row == 1) {
+    if (row == 0) {
       this.quf.union(this.top, flattensite);
     }
     if (row == this.N - 1) {
@@ -199,7 +192,6 @@ public class Percolation {
     open_tests(p, N);
 
     input_4();
-    StdOut.println("Testing: " + p.index(2));
 
 
   }

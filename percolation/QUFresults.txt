@@ -1,0 +1,51 @@
+---------Double time of T----------
+N = 100
+T = 50
+Mean = 0.5914499999999999
+Standard Dev = 0.018022868126638565
+95% confidence interval = 0.5864543158306393 / 0.5964456841693605
+Elapsed Time = 0.573 seconds
+
+N = 100
+T = 100
+Mean = 0.5953780000000001
+Standard Dev = 0.01512888454165566
+95% confidence interval = 0.5924127386298356 / 0.5983432613701646
+Elapsed Time = 1.139 seconds
+
+N = 100
+T = 200
+Mean = 0.5915645000000002
+Standard Dev = 0.016198789884389293
+95% confidence interval = 0.5893194622618437 / 0.5938095377381566
+Elapsed Time = 2.237 seconds
+
+N = 100
+T = 400
+Mean = 0.59253275
+Standard Dev = 0.016006699801452976
+95% confidence interval = 0.5909640934194577 / 0.5941014065805424
+Elapsed Time = 4.487 seconds
+
+---------Double time of N----------
+N = 100
+T = 50
+Mean = 0.5932779999999999
+Standard Dev = 0.01534924434755067
+95% confidence interval = 0.5890234065324168 / 0.5975325934675829
+Elapsed Time = 0.575 seconds
+
+N = 200
+T = 50
+Mean = 0.5920084999999999
+Standard Dev = 0.012024457018162302
+95% confidence interval = 0.5886754905617295 / 0.5953415094382704
+Elapsed Time = 8.392 seconds
+
+N = 400
+T = 50
+Mean = 0.5928676249999999
+Standard Dev = 0.006739693412842087
+95% confidence interval = 0.590999477297187 / 0.5947357727028127
+Elapsed Time = 129.114 seconds
+
