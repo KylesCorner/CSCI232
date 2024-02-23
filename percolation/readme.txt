@@ -195,12 +195,9 @@ Sense the worst time complexity for weighted quick union find is O(lgN).
 That's an order of magnitude better than quick union find. So the runtime will be and order of
 magnitude better than quick union find.
 
+In my testing I concluded that the runtime complexity for WeightedQuickUnionUF is O(TN^3).
 
-
-
-
-
-
+In both of the implementations the time scaled linearly with T.
  
 /******************************************************************************
  *  Known bugs / limitations.
