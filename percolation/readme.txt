@@ -191,7 +191,9 @@ Elapsed Time = 56.989 seconds
 
 Run time estimate:
 
-Sense the worst time complexity for weighted quick union find is O(lgN)
+Sense the worst time complexity for weighted quick union find is O(lgN).
+That's an order of magnitude better than quick union find. So the runtime will be and order of
+magnitude better than quick union find.
 
 
 
@@ -214,14 +216,15 @@ Sense the worst time complexity for weighted quick union find is O(lgN)
  *  classmates, and friends) and attribute them by name.
  *****************************************************************************/
 
+Colin and Alex helped me debug my code.
 
 
 
 /******************************************************************************
  *  Describe any serious problems you encountered.                    
  *****************************************************************************/
-
-
+My top node was too large and nothing was accessing it. In the visualization it seemed to work find
+but didn't actually percolate. I fixed
 
 
 /******************************************************************************
