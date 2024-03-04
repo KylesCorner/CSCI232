@@ -13,6 +13,9 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
 
 
 public class RandomizedBag<Item> implements Iterable<Item> {
@@ -24,16 +27,16 @@ public class RandomizedBag<Item> implements Iterable<Item> {
      * Initializes an empty stack.
      */
     public RandomizedBag() {
-        a = (Item[]) new Object[2];
-        n = 0;
-        rng = new Random();
+        this.a = (Item[]) new Object[2];
+        this.n = 0;
+        this.rng = new Random();
     }
 
     /**
      * Is this stack empty?
      */
     public boolean isEmpty() {
-        return this.n = 0;
+        return this.n == 0;
     }
 
     /**
@@ -48,24 +51,41 @@ public class RandomizedBag<Item> implements Iterable<Item> {
      * Resize the underlying array holding the elements
      */
     private void resize(int capacity) {
-        //haven't we done this somewhere before?  (in some other lab)
+        Item[] copy = (Item[]) new Object[capacity];
+        for (int i = 0; i < n; i++) {
+            copy[i] = this.a[i];
+        }
+        this.a = copy;
     }
 
 
 
-    /**
-     * Adds the item to this bag (which is an array).
-     */
     public void put(Item item) {
-        // FIXME
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
+        if (this.n == this.a.length) {
+            resize(2 * this.a.length); // Double the capacity when full
+        }
+        this.a[this.n++] = item;
     }
 
     /**
      * Removes and returns a random item from the bag
      */
     public Item get() {
-        Item item = null;
-        // FIXME - need to do something here
+        if (isEmpty()) {
+            throw new NoSuchElementException("Bag is empty");
+        }
+        int randomIndex = this.rng.nextInt(this.n); // Choose a random index
+        Item item = this.a[randomIndex];
+        this.a[randomIndex] = this.a[this.n- 1]; // Swap the chosen item with the last one
+        this.a[this.n-1] = null;
+        this.n--;
+
+        if(this.n > 0 && this.n == this.a.length/4){
+            resize(this.a.length /2);
+        }
         return item;
     }
 
@@ -79,8 +99,8 @@ public class RandomizedBag<Item> implements Iterable<Item> {
 
     // an iterator; ours doesn't implement remove() since it's optional
     private class RandomizedBagIterator implements Iterator<Item> {
-        private int i;
         private Item itArr[];
+        private int count;
 
         public RandomizedBagIterator() {
             /* do the work here to support
@@ -88,6 +108,14 @@ public class RandomizedBag<Item> implements Iterable<Item> {
             *        - in this constructor, this can take time linear in the size of the bag
             *    (ii) constant time next() and hasnext() calls.
             */
+            itArr = (Item[]) new Object[n];
+            count = 0;
+
+            for(int index = 0; index < n; index++){
+                itArr[index] = a[index];
+            }
+            shuffle(itArr);
+
         }
 
         public void remove() {
@@ -95,15 +123,22 @@ public class RandomizedBag<Item> implements Iterable<Item> {
         }
         
         public boolean hasNext() {
-            return false; //FIXME - how to tell?
+            return count < n; 
         }
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-            Item item = null;
+            return itArr[count++];
+        }
 
-            //FIXME return the next entry from THIS iterator's random order
-            return item;
+        private void shuffle(Item[] arr){
+            for(int index = a.length-1; count > 0; count--){
+                int randomIndex = StdRandom.uniform(index + 1);
+                Item temp = itArr[randomIndex];
+                itArr[randomIndex] = itArr[index];
+                itArr[index] = temp;
+
+            }
         }
     }
 
