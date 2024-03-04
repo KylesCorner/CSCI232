@@ -3,7 +3,7 @@
  *  Name:              Kyle Krstulich
  *  Last modified:     1/27/24
  **************************************************************************** */
-import edu.princeton.cs.algs4.QuickFindUF;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
@@ -15,7 +15,7 @@ public class Percolation {
   // Attributes
   // -----------------------------
 
-  private QuickFindUF quf;
+  private WeightedQuickUnionUF wqu;
   private int[][] data; // values in array not working
   private int N;
   private final int bottom;
@@ -30,7 +30,7 @@ public class Percolation {
     // create N-by-N grid, with all sites initially blocked
 
     this.N = N;
-    this.quf = new QuickFindUF(N * N + 2);
+    this.wqu = new WeightedQuickUnionUF(N * N + 2);
     // 0 = closed. 1 = open.
     this.data = new int[N][N];
     this.top = N * N;
@@ -65,19 +65,19 @@ public class Percolation {
 
     if (validate_index(row + 1, col) && isOpen(row + 1, col)) {
       q = flatten(row + 1, col);
-      quf.union(p, q);
+      wqu.union(p, q);
     }
     if (validate_index(row - 1, col) && isOpen(row - 1, col)) {
       q = flatten(row - 1, col);
-      quf.union(p, q);
+      wqu.union(p, q);
     }
     if (validate_index(row, col + 1) && isOpen(row, col + 1)) {
       q = flatten(row, col + 1);
-      quf.union(p, q);
+      wqu.union(p, q);
     }
     if (validate_index(row, col - 1) && isOpen(row, col - 1)) {
       q = flatten(row, col - 1);
-      quf.union(p, q);
+      wqu.union(p, q);
     }
   }
 
@@ -98,10 +98,10 @@ public class Percolation {
     int flattensite = flatten(row, col);
 
     if (row == 0) {
-      this.quf.union(this.top, flattensite);
+      this.wqu.union(this.top, flattensite);
     }
     if (row == this.N - 1) {
-      this.quf.union(this.bottom, flattensite);
+      this.wqu.union(this.bottom, flattensite);
     }
 
     check_connected(row, col);
@@ -119,7 +119,7 @@ public class Percolation {
 
   public boolean isFull(int row, int col) {
     // is the site (row, col) full?
-    return this.quf.find(this.top) == this.quf.find(flatten(row, col));
+    return this.wqu.find(this.top) == this.wqu.find(flatten(row, col));
   }
 
   public int numberOfOpenSites() {
@@ -129,7 +129,7 @@ public class Percolation {
 
   public boolean percolates() {
     // does the system percolate?
-    return this.quf.connected(this.top, this.bottom);
+    return this.wqu.connected(this.top, this.bottom);
   }
 
   // -----------------------------
