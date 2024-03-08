@@ -28,22 +28,18 @@ public class Autocomplete {
             throw new java.lang.IllegalArgumentException("Prefix cannot be null");
         }
 
-        if(prefix.length() == 0){ //no input all cases are matches => O(n log n)
-            Term[] matches = new Term[terms.length];
-            for(int i = 0; i < terms.length; i++){
-                matches[i] = terms[i];
-            }
-            Arrays.sort(matches, Term.byReverseWeightOrder());
-            return matches;
+        if(prefix.length() == 0){ 
+            return this.terms;
         }
+
         Term p = new Term(prefix, 0);
         int first = BinarySearchDeluxe.firstIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
-
-        if(first < 0){
-            return new Term[] {};
-        }
         int last = BinarySearchDeluxe.lastIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
         Term[] matches = new Term[last - first + 1];
+
+        if(first < 0){ // No matches
+            return new Term[] {};
+        }
         for(int i = first; i <= last; i++){
             matches[i - first] = terms[i];
         }
@@ -64,7 +60,7 @@ public class Autocomplete {
         Term p = new Term(prefix, 0);
         int first = BinarySearchDeluxe.firstIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
 
-        if(first < 0){
+        if(first < 0){ //No matches
             return 0;
         }
 
