@@ -11,14 +11,19 @@ public class BinarySearchDeluxe {
         int high = a.length -1;
         while (low <= high) {
             int mid = low + (high - low)/2;
-            if(comparator.compare(a[mid], key) > 0) high = mid -1; //left term
-            else if(comparator.compare(a[mid], key) < 0) low = mid +1; // right term
-            else{
-                while(mid >= 0 && comparator.compare(a[mid], key) == 0){
-                    mid--;;
+            int comp = comparator.compare(a[mid], key);
+
+            if (comp == 0){ //Within correct terms
+                while(mid >= 0 && comp == 0){ 
+                    mid--; // decriment mid till not within correct terms
+                    comp = comparator.compare(a[mid], key);
                 }
-                return mid + 1;
+                return mid + 1; // add one to find first index
             }
+
+            if(comp > 0) high = mid -1; //passed correct terms, ignore greater half
+
+            if(comp < 0) low = mid +1; //before correct terms, ignore smaller half
         }
 
         return -1;
@@ -34,15 +39,18 @@ public class BinarySearchDeluxe {
 
         while (low <= high) {
             int mid = low + (high - low)/2;
-            if(comparator.compare(a[mid], key) > 0) high = mid -1; // left term
-            else if(comparator.compare(a[mid], key) < 0) low = mid +1; // right term
-            else{
-                while (mid < a.length && comparator.compare(a[mid], key) == 0) {
-                    mid++;
-                    
+            int comp = comparator.compare(a[mid], key);
+
+            if(comp == 0){ //Within correct terms
+                while (mid < a.length && comp == 0) {
+                    mid++; //increment mid till not within correct terms
+                    comp = comparator.compare(a[mid], key);   
                 }
-                return mid -1;
+                return mid -1; // subtract one to find last index
+
             }
+            if(comp > 0) high = mid -1; // passed correct terms, ignore greater half 
+            if(comp < 0) low = mid +1; // before correct terms, ignore smaller half
             
         }
             
