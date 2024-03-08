@@ -26,17 +26,9 @@ public class Term implements Comparable<Term> {
         return new Comparator<Term>() {
             public int compare(Term v, Term w) {
 
-                //some condition
-                //some condition
-                if(v.weight < w.weight){
-                    return 1;
-                }else if(v.weight > w.weight){
-                    return -1;
-                }
-                else{
-                //some condition
-                    return 0;
-                }
+                int out = v.weight < w.weight ? 1 : -1;
+                out = v.weight == w.weight? 0: out;
+                return out;
 
             }
 
@@ -51,20 +43,26 @@ public class Term implements Comparable<Term> {
         }
         return new Comparator<Term>() {
             public int compare(Term v, Term w) {
-                int max = v.query.length() < w.query.length() ?
-                    v.query.length() : w.query.length();
+                int wSize = w.query.length();
+                int vSize = v.query.length();
+                int max = vSize < wSize ?
+                    vSize : wSize;
                 max = max < r ? max :r;
+
+                boolean checkR = r > vSize && r > wSize;
+                boolean checkW = wSize < vSize;
+                boolean checkV = vSize < wSize;
+                boolean checkInvalid = checkR && checkV && checkW;
+
+                if(checkInvalid){
+                    return -1;
+                }
 
                 for(int i = 0; i < max; i++){
                     if(v.query.charAt(i) > w.query.charAt(i)) return 1;
                     else if( v.query.charAt(i) < w.query.charAt(i)) return -1;
                 }
-                if(r > v.query.length() && w.query.length() > v.query.length()){
-                    return -1;
-                }
-                else if(r > w.query.length() && v.query.length() > w.query.length()){
-                    return -1;
-                }
+
                 return 0;
             }
         };
@@ -78,7 +76,8 @@ public class Term implements Comparable<Term> {
     // Returns a string representation of this term in the following format:
     // the weight, followed by a tab, followed by the query.
     public String toString() {
-        return Long.toString(weight) + "\t" + query;
+        
+        return Long.toString(weight) + " : " + query;
     }
 
     // unit testing (you should have some Unit Testing here to confirm that your methods work); for example...
