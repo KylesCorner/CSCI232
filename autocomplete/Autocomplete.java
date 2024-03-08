@@ -22,12 +22,13 @@ public class Autocomplete {
     }
 
     // Returns all terms that start with the given prefix, in descending order of weight.
+    // O(n log n)
     public Term[] allMatches(String prefix) {
         if(prefix == null){
             throw new java.lang.IllegalArgumentException("Prefix cannot be null");
         }
 
-        if(prefix.length() == 0){
+        if(prefix.length() == 0){ //no input all cases are matches => O(n log n)
             Term[] matches = new Term[terms.length];
             for(int i = 0; i < terms.length; i++){
                 matches[i] = terms[i];
@@ -36,22 +37,23 @@ public class Autocomplete {
             return matches;
         }
         Term p = new Term(prefix, 0);
-        int first = BinarySearchDeluxe.firstIndexOf(terms, p, Term.byPrefixOrder(prefix.length()));
+        int first = BinarySearchDeluxe.firstIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
 
         if(first < 0){
             return new Term[] {};
         }
-        int last = BinarySearchDeluxe.lastIndexOf(terms, p, Term.byPrefixOrder(prefix.length()));
+        int last = BinarySearchDeluxe.lastIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
         Term[] matches = new Term[last - first + 1];
         for(int i = first; i <= last; i++){
             matches[i - first] = terms[i];
         }
-        Arrays.sort(matches, Term.byReverseWeightOrder());
+        Arrays.sort(matches, Term.byReverseWeightOrder()); //O(n log n)
         return matches;
 
     }
 
     // Returns the number of terms that start with the given prefix.
+    // O(n)
     public int numberOfMatches(String prefix) {
         if(prefix == null){
             throw new java.lang.IllegalArgumentException("Prefix cannot be null");
@@ -60,13 +62,13 @@ public class Autocomplete {
             return terms.length;
         }
         Term p = new Term(prefix, 0);
-        int first = BinarySearchDeluxe.firstIndexOf(terms, p, Term.byPrefixOrder(prefix.length()));
+        int first = BinarySearchDeluxe.firstIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
 
         if(first < 0){
             return 0;
         }
 
-        int last = BinarySearchDeluxe.lastIndexOf(terms, p, Term.byPrefixOrder(prefix.length()));
+        int last = BinarySearchDeluxe.lastIndexOf(terms, p, Term.byPrefixOrder(prefix.length())); //O(n)
         return last - first + 1;
     }
     

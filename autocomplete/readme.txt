@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Name:
+ *  Name: Kyle Krstulich
  *
  *  Hours to complete assignment (optional):
  *
@@ -13,6 +13,10 @@ Programming Assignment 2: Autocomplete
  *  finds the first index of a key that equals the search key.
  *****************************************************************************/
 
+The method continously splts an array in half, by checking if the middle value's prefix matches the key.
+If the value is greater than the key, ignore the greater half. If the value is less then the key, ignore the smaller half.
+If the value matches the key, then decriment the middle index until you find the first value that matches the key.
+else return -1
 
 
 
@@ -26,11 +30,11 @@ Programming Assignment 2: Autocomplete
  *  leading coefficients and lower-order terms, e.g., m^2 + m log n.
  *****************************************************************************/
 
-constructor:
+constructor: O(n log n)
 
-allMatches():
+allMatches(): O(n log n)
 
-numberOfMatches():
+numberOfMatches(): O(n)
 
 
 
@@ -38,7 +42,7 @@ numberOfMatches():
 /******************************************************************************
  *  Known bugs / limitations.
  *****************************************************************************/
-
+ doesnt support uppercase letters.
 
 /******************************************************************************
  *  Describe whatever help (if any) that you received.
@@ -49,12 +53,15 @@ numberOfMatches():
  *  Also include any resources (including the web) that you may
  *  may have used in creating your design.
  *****************************************************************************/
+https://www.geeksforgeeks.org/binary-search/
 
+Ingrid and Colin helped me on this assignment.
 
 /******************************************************************************
  *  Describe any serious problems you encountered.
  *****************************************************************************/
 
+The comparitor took me a while to figure out.
 
 
 
@@ -65,4 +72,5 @@ numberOfMatches():
  *  you enjoyed doing it.
  *****************************************************************************/
 
+This project was a good time.
 

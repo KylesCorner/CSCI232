@@ -6,6 +6,15 @@ public class BinarySearchDeluxe {
     
     // Returns the index of the first key in a[] that equals the search key, or -1 if no such key.
     // Binary search in terms of the first element.
+    /*
+     The binary search algorithm has a time complexity of O(log n), where n is
+     the number of elements in the array.
+     Within the loop, there's an additional while loop that decrements mid until
+     it's no longer within the correct terms. In the worst-case scenario, this
+     could mean iterating over all the elements to find the first occurrence of
+     the key.  Therefore, in the worst case, the time complexity would be O(n)
+     for the additional while loop.
+     */
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
         int low = 0;
         int high = a.length -1;
