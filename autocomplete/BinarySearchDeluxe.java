@@ -53,7 +53,9 @@ public class BinarySearchDeluxe {
             if(comp == 0){ //Within correct terms
                 while (mid < a.length && comp == 0) {
                     mid++; //increment mid till not within correct terms
+                    if(mid < a.length){
                     comp = comparator.compare(a[mid], key);   
+                    }
                 }
                 return mid -1; // subtract one to find last index
 
