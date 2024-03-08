@@ -61,7 +61,7 @@ Ingrid and Colin helped me on this assignment.
  *  Describe any serious problems you encountered.
  *****************************************************************************/
 
-The comparitor took me a while to figure out.
+The comparator took me a while to figure out.
 
 
 
